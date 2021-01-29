@@ -22,7 +22,7 @@
 
 if __FILE__ == $0
 
-load "../dudle.rb"
+load "../../dudle.rb"
 $d = Dudle.new
 require "fileutils"
 

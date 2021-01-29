@@ -33,7 +33,7 @@ require "locale"
 
 if File.exists?("data.yaml") && !File.stat("data.yaml").directory?
 	$is_poll = true
-	GetText.bindtextdomain("dudle", :path => Dir.pwd + "/../locale/")
+	GetText.bindtextdomain("dudle", :path => Dir.pwd + "/../../locale/")
 else
 	$is_poll = false
 	GetText.bindtextdomain("dudle", :path => Dir.pwd + "/locale/")
@@ -74,22 +74,16 @@ class Dudle
 		if is_poll?
 			@tabs << ["",""]
 			@tabs << [_("Poll"),"."]
-			@tabs << [_("History"),"history.cgi"]
 			@tabs << ["",""]
 			@configtabs = [
 				[_("Edit Columns"),"edit_columns.cgi"],
-				[_("Invite Participants"),"invite_participants.cgi"],
-				[_("Access Control"),"access_control.cgi"],
 				[_("Overview"),"overview.cgi"]
 			]
 			@tabs += @configtabs
-			@tabs << [_("Delete Poll"),"delete_poll.cgi"]
 			@tabs << ["",""]
-		else
-			@tabs << [_("Examples"),"example.cgi"]
-			@tabs << [_("About"),"about.cgi"]
 		end
-		@tabs << [_("Customize"),"customize.cgi"]
+		@tabs << ["",""]
+		@tabs << [_("About"),"about.cgi"]
 		@tabtitle = @tabs.collect{|title,file| title if file == @tab}.compact[0]
 	end
 	def revision
@@ -123,7 +117,7 @@ class Dudle
 		if is_poll?
 			# log last read access manually (no need to grep server logfiles)
 			File.open("last_read_access","w").close unless @cgi.user_agent =~ $conf.bots
-			@basedir = ".."
+			@basedir = "../.."
 			inittabs
 			@table = YAML::load(VCS.cat(self.revision, "data.yaml"))
 			@urlsuffix = File.basename(File.expand_path("."))
@@ -242,39 +236,6 @@ READY
 
 		@html.add_cookie("lang",@cgi["lang"],"/",Time.now + (1*60*60*24*365)) if @cgi.include?("lang")
 		@html << "</div>" # content
-		@html << "<div id='languageChooser'><ul>"
-		lang = [# sorted by native speakers according to English Wikipedia
-			["es", "Español"],# 480 million native speakers (2018)
-			["en", "English"],# 360–400 million (2006)
-			["ar", "اَلْعَرَبِيَّة"],# 310 million, all varieties (2011–2016)
-			["pt_BR", "Português brasileiro"],# 205 million (2011)
-			["de", "Deutsch"],# 95 million (2014)
-			["it", "Italiano"],# 90 million (2012)
-			["fr", "Français"],# 76.8 million (2014)
-			["nl", "Nederlands"],# 24 million (2016)
-			["sw", "Kiswahili"],# 15 million (2012)
-			["hu", "Magyar"],# 13 million (2002–2012)
-			["sv", "Svenska"],# 10 million (2018)
-			["cs", "Česky"],# 10.7 million (2015)
-			["da", "Dansk"],# 5.5 million (2012)
-			["fi", "Finnish"],# 5.4 million (2009–2012)
-			["he", "עִבְרִית"],# 5 million (2017)
-			["no", "Norsk"],# 4.32 million (2012)
-			["ca", "Català"],# 4.1 million (2012)
-			["gl", "Galego"],# 2.4 million (2012)
-			["et", "Eesti"],# 1.1 million (2012)
-			["eo", "Esperanto"]# estimated 1000 to several thousand (2016)
-		]
-		unless @hide_lang_chooser
-			lang.each{|short,long|
-				if short == GetText.locale.to_s
-					@html << "<li class='lang'>#{long}</li>"
-				else
-					@html << "<li class='lang'><a href='?lang=#{short}'>#{long}</a></li>"
-				end
-			}
-		end
-		@html << "</ul></div>" # languageChooser
 
 		@html << "</div>" # main
 		$conf.footer.each{|f| @html << f }

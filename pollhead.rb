@@ -107,10 +107,7 @@ EDITDELETE
 	<table class='settingstable'>
 		<tr>
 			<td class='label'><label for='columntitle'>#{columntitlestr}:</label></td>
-			<td><input id='columntitle' type='text' value="#{title}" name='new_columnname' /></td>
-		</tr><tr>
-			<td class='label'><label for='columndescription'>#{descriptionstr}:</label></td>
-			<td><input id='columndescription' type='text' value="#{CGI.escapeHTML(description.to_s)}" name='columndescription' /></td>
+			<td><input id='columntitle' type='text' value="#{title}" name='new_columnname' /><input id='columndescription' type='hidden' value="#{CGI.escapeHTML(description.to_s)}" name='columndescription' /></td>
 		</tr><tr>
 			<td></td>
 			<td>

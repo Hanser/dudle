@@ -21,7 +21,7 @@
 
 if __FILE__ == $0
 
-load "../dudle.rb"
+load "../../dudle.rb"
 
 revbeforeedit = VCS.revno
 
@@ -41,7 +41,6 @@ $d.wizzard_redirect
 
 revno = VCS.revno
 
-$d << "<h2>" + _("Add and remove columns") + "</h2>"
 $d << $d.table.edit_column_htmlform($cgi["editcolumn"],revno)
 
 h = VCS.history
@@ -90,32 +89,6 @@ if rrevs.min
 
 	hidden["Redo"] = "<input type='hidden' name='redo'/>"
 end
-
-	$d << <<UNDOREDOREADY
-<div class='undo'>
-	<table>
-		<tr>
-UNDOREDOREADY
-	localstr = {"Undo" => _("Undo"), "Redo" => _("Redo")}
-	["Undo","Redo"].each{|button|
-		$d << <<TD
-			<td>
-				<form method='post' action=''>
-					<div>
-						<input type='submit' title="#{CGI.escapeHTML(title[button].to_s)}" value='#{localstr[button]}' #{disabled[button]} />
-						<input type='hidden' name='undo_revision' value='#{undorevision[button]}' />
-						#{hidden["common"]}
-						#{hidden[button]}
-					</div>
-				</form>
-			</td>
-TD
-	}
-	$d << <<END
-		</tr>
-	</table>
-</div>
-END
 
 #$d << (urevs + rrevs).to_html(curundorev,"")
 

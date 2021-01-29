@@ -26,6 +26,10 @@ require_relative "dudle"
 
 $d = Dudle.new
 
+if !(File.exist?("polls"))
+	Dir.mkdir("polls")
+end
+
 if $cgi.include?("create_poll") && $cgi.include?("poll_url")
 	polltitle=$cgi["create_poll"]
 	if polltitle == ""
@@ -33,36 +37,43 @@ if $cgi.include?("create_poll") && $cgi.include?("poll_url")
 	else
 		if $cgi["poll_url"] == ""
 			require "securerandom"
-			true while(File.exists?(pollurl = SecureRandom.urlsafe_base64($conf.random_chars)))
+			true while(File.exists?(pollurl = "polls/" + SecureRandom.urlsafe_base64($conf.random_chars)))
 		else
-			pollurl=$cgi["poll_url"]
+			if !(pollurl =~ /\A[\w\-_]*\Z/)
+				createnotice = _("Custom address may only contain letters, numbers, and dashes.")
+			else	
+				pollurl="polls/" + $cgi["poll_url"]
+			end
 		end
 
-
-		if !(pollurl =~ /\A[\w\-_]*\Z/)
-			createnotice = _("Custom address may only contain letters, numbers, and dashes.")
+		if pollurl == ""
+			pollurl=""
 		elsif File.exist?(pollurl)
 			createnotice = _("A poll with this address already exists.")
 		else Dir.mkdir(pollurl)
 			Dir.chdir(pollurl)
 			begin
 				VCS.init
-				File.symlink("../participate.rb","index.cgi")
+				File.symlink("../../participate.rb","index.cgi")
+				File.symlink("../../about.cgi","about.cgi")
 				["atom","customize", "history", "overview", "edit_columns","access_control", "delete_poll", "invite_participants"].each{|f|
-					File.symlink("../#{f}.rb","#{f}.cgi")
+					File.symlink("../../#{f}.rb","#{f}.cgi")
+				}
+				["classic.css","print.css", "default.css"].each{|f|
+					File.symlink("../../#{f}","#{f}")
 				}
 				["data.yaml",".htaccess",".htdigest"].each{|f|
 					File.open(f,"w").close
 					VCS.add(f)
 				}
 				Poll.new(polltitle,$cgi["poll_type"])
-				Dir.chdir("..")
+				Dir.chdir("../..")
 				$d.html.header["status"] = "REDIRECT"
 				$d.html.header["Cache-Control"] = "no-cache"
 				$d.html.header["Location"] = $conf.siteurl + pollurl + "/edit_columns.cgi"
 				$d << _("The poll was created successfully. The link to your new poll is: %{link}") % {:link => "<br /><a href=\"#{pollurl}\">#{pollurl}</a>"}
 			rescue WrongPollTypeError # should only happen in case of hacking
-				Dir.chdir("..")
+				Dir.chdir("../..")
 				require "fileutils"
 				FileUtils.rm_r(pollurl)
 				$d.html.header["status"] = "REDIRECT"
@@ -108,11 +119,7 @@ unless $d.html.header["status"] == "REDIRECT"
 	<td class='separator_bottom'><input type='submit' value='#{createstr}' /></td>
 </tr>
 <tr>
-	<td colspan='2' class='separator_top'>#{customaddrstr}:
-	<span class='hint'>#{customaddrhintstr}</span></td>
-</tr>
-<tr>
-	<td colspan='2'><label for="poll_url">#{$conf.siteurl}</label><input id="poll_url" size='16' type='text' name='poll_url' value="#{CGI.escapeHTML($cgi["poll_url"])}" />
+	<td colspan='2'><input id="poll_url" size='16' type='hidden' name='poll_url' value="#{CGI.escapeHTML($cgi["poll_url"])}" />
 	</td>
 </tr>
 CREATE

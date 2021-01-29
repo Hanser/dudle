@@ -20,7 +20,7 @@
 ############################################################################
 
 if __FILE__ == $0
-load "../dudle.rb"
+load "../../dudle.rb"
 
 if $cgi.include?("revision")
 	revno=$cgi["revision"].to_i

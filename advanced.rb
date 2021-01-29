@@ -20,7 +20,7 @@
 ############################################################################
 
 if __FILE__ == $0
-load "../dudle.rb"
+load "../../dudle.rb"
 
 hintstr = ""
 if $cgi.include?("undo_revision") && $cgi["undo_revision"].to_i < VCS.revno

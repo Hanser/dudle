@@ -22,7 +22,7 @@
 
 if __FILE__ == $0
 
-load "../dudle.rb"
+load "../../dudle.rb"
 require "digest"
 
 $d = Dudle.new

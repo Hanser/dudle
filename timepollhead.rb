@@ -314,7 +314,6 @@ END
 			hintstr = _("Select specific start times.")
 			ret += <<END
 <div id='ConcreteColumndaysDescription' class='shorttextcolumn'>
-#{optstr}<br/>
 #{hintstr}
 </div>
 <table border='1' class='calendarday'>

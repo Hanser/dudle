@@ -541,12 +541,11 @@ msgstr "Typ"
 
 #: ../index.cgi:88
 msgid "Event-scheduling poll (e.&thinsp;g., schedule a meeting)"
-msgstr "Nach einer Zeit fragen (z.&thinsp;B. einen Besprechungstermin finden)"
+msgstr "Termin"
 
 #: ../index.cgi:89
 msgid "Normal poll (e.&thinsp;g., vote for what is the best coffee)"
-msgstr ""
-"Normale Umfrage (z.&thinsp;B. eine Umfrage über die beste Kaffeesorte)"
+msgstr "Umfrage"
 
 #: ../index.cgi:90
 msgid "Custom address (optional)"
@@ -768,7 +767,7 @@ msgstr "Beschreibung (optional)"
 
 #: ../pollhead.rb:101
 msgid "Add/Edit option"
-msgstr "Option bearbeiten/hinzufügen"
+msgstr "Option speichern"
 
 #: ../pollhead.rb:102
 msgid "Preview"
@@ -780,9 +779,7 @@ msgid ""
 "to choose among. For each option you give here, the participants will choose "
 "a vote."
 msgstr ""
-"Geben Sie alle Optionen (Spalten) ein, nach denen in der Umfrage gefragt "
-"werden soll. Die Teilnehmer der Umfrage können für jede Option einzeln "
-"ihre Stimme abgeben."
+"Optionen eingeben."
 
 #: ../timepollhead.rb:113
 msgid ""
@@ -806,7 +803,7 @@ msgstr "Später"
 
 #: ../timepollhead.rb:265
 msgid "Click on the dates to add or remove columns."
-msgstr "Klicken Sie auf ein Datum, um es der Umfrage hinzuzufügen."
+msgstr "Tage auswählen."
 
 #: ../timepollhead.rb:313
 msgid "Optional:"
@@ -814,7 +811,7 @@ msgstr "Optional:"
 
 #: ../timepollhead.rb:314
 msgid "Select specific start times."
-msgstr "Geben Sie eine Zeit für ein Datum ein."
+msgstr "Zeiten auswählen."
 
 #: ../timepollhead.rb:330
 msgid "Time"
@@ -842,7 +839,7 @@ msgstr "Die Auswahl der ganzen Zeile entfernen"
 
 #: ../timepollhead.rb:428
 msgid "Add"
-msgstr "Hinzufügen"
+msgstr "Zeit hinzufügen"
 
 #: ../timepollhead.rb:429
 msgid "e.&thinsp;g., 09:30, morning, afternoon"

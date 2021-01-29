@@ -61,11 +61,11 @@ $conf.aboutnotice = ""
 
 $conf.default_css = "default.css"
 
-$conf.dudle_src = "https://github.com/kellerben/dudle/"
+$conf.dudle_src = "https://github.com/Hanser/dudle"
 
 $conf.bots = /bot/i
 
-if File.exists?("config.rb") || File.exists?("../config.rb")
+if File.exists?("config.rb") || File.exists?("../../config.rb")
 	require_relative "config"
 end
 
